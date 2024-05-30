@@ -5,10 +5,22 @@
 Module: rain
 
 def rain(walls):
+    """
+    Calculate the total amount of rainwater retained.
+
+    Args:
+    walls (list): A list of non-negative integers representing the heights of walls.
+
+    Returns:
+    int: Total amount of rainwater retained.
+    """
     if not walls:
         return 0
     
     n = len(walls)
+    if n < 3:
+        return 0  # Not enough walls to trap any water
+
     left_max = [0] * n
     right_max = [0] * n
     
@@ -30,10 +42,19 @@ def rain(walls):
     
     return total_water
 
-# Test cases
 if __name__ == "__main__":
-    walls = [0, 1, 0, 2, 0, 3, 0, 4]
-    print(rain(walls))  # Output: 6
-    walls = [2, 0, 0, 4, 0, 0, 1, 0]
-    print(rain(walls))  # Output: 6
+    # Test cases
+    test_cases = [
+        ([], 0),
+        ([2, 0, 2], 2),
+        ([0, 1, 0, 2, 0, 3, 0, 4], 6),
+        ([1, 1, 2, 0, 1, 1, 1], 1),
+        ([0, 2, 1, 0, 1, 3, 1, 2, 1, 1, 2, 1], 8),
+        ([2, 0, 0, 0, 0, 3, 0], 10),
+        ([1], 0),
+        ([3, 3], 0)
+    ]
 
+    for walls, expected in test_cases:
+        result = rain(walls)
+        print(f"rain({walls}) = {result}, expected = {expected}, {'PASS' if result == expected else 'FAIL'}")
